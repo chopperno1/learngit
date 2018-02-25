@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>我的笔记</title>
+        <script type="text/javascript" 
+				src="scripts/jquery.min.js"></script>
+		  <script type="text/javascript"
+				src="scripts/basevalue.js"></script>
+		  <script type="text/javascript"
+				src="scripts/cookie_util.js"></script>
+		  <script type="text/javascript">
+		  		//主处理函数
+		  		$(function(){
+		  			//绑定搜索按钮单击事件
+		  			$("#search_btn").click(function(){
+		  				//获取参数
+		  				var userId=getCookie("userId");
+		  				if(userId==null){
+		  					window.location.href="log_in.html";
+		  				}else{//获取其他参数
+		  					var title=$("#title").val().trim();
+		  					var status=$("#status").val();
+		  					var begin=$("#begin").val().trim();
+		  					var end = $("#end").val();
+		  				}
+		  				$.ajax({
+		  						url:path+"/note/find.do",
+		  						type:"post",
+		  						data:{
+		  							"title":title,
+		  							"status":status,
+		  							"begin":begin,
+		  							"end":end,
+		  							"userId":userId
+		  						},
+		  						dataType:"json",
+		  						success:function(){},
+		  						error:function(){
+		  							alert("搜索失败");
+		  						}
+		  				});
+		  			});
+		  		});
+		  </script>
+    </head>
+     <body>
+     		标题:<input type="text" id="title"/>
+     		状态:<select id="status">
+     				<option value="0">全部</option>
+     				<option value="1">正常</option>
+     				<option value="2">删除</option>
+     			  </select><br/>
+     		 开始时间:<input type="text" id="begin"/>
+     		 结束时间:<input type="text" id="end"/>
+     		 <input type="button" id="search_btn"
+     		  value="搜索按钮" />
+     		 <hr />
+     		 <table>
+     		 	<tr><th>标题</th><th>状态</th><th>创建时间</th></tr>
+     		 </table>
+     </body>  	
+</html>
+
+
+
+
+
+
+
+
+
+
+
